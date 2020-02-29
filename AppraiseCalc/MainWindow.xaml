@@ -13,8 +13,10 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="resultGrid" Margin="10,5,10,10" Grid.Row="1" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
+                <DataGridTextColumn Header="Chain" Binding="{Binding ChainDescription}"/>
+                <DataGridTextColumn Header="# Remaining gather attempts" Binding="{Binding NumGatherAttempts}"/>
+                <DataGridTextColumn Header="Expected rarity" Binding="{Binding ExpectedRarity}"/>
+                <DataGridTextColumn Header="GP Cost" Binding="{Binding GpCost}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Margin="10,10,10,5">
