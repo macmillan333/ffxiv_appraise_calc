@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppraiseCalc"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Appriasal Calculator" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="resultGrid" Margin="10,5,10,10" Grid.Row="1" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Margin="10,10,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Max Wear" Margin="0" Grid.Column="0" VerticalContentAlignment="Center"/>
+            <Label Content="Max Attempts" Margin="0" Grid.Column="1" VerticalContentAlignment="Center"/>
+            <Label Content="Max GP" Margin="0" Grid.Column="2" VerticalContentAlignment="Center"/>
+            <Label Content="Discerning Eye Chance" Margin="0" Grid.Column="3" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="maxWearTextbox" Margin="5" TextWrapping="Wrap" Text="30" VerticalContentAlignment="Center" TextChanged="MaxWearTextbox_TextChanged" Grid.Row="1" Grid.Column="0"/>
+            <TextBox x:Name="maxAttemptTextbox" Margin="5" TextWrapping="Wrap" Text="6" VerticalContentAlignment="Center" TextChanged="MaxAttemptTextbox_TextChanged" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="maxGpTextbox" Margin="5" TextWrapping="Wrap" Text="600" VerticalContentAlignment="Center" TextChanged="MaxGpTextbox_TextChanged" Grid.Row="1" Grid.Column="2"/>
+            <TextBox x:Name="procChanceTextbox" Margin="5" TextWrapping="Wrap" Text="0.3" VerticalContentAlignment="Center" TextChanged="ProcChanceTextbox_TextChanged" Grid.Row="1" Grid.Column="3"/>
+        </Grid>
+
     </Grid>
 </Window>
