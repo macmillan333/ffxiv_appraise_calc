@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DataGrid x:Name="resultGrid" Margin="10,5,10,10" Grid.Row="1" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
