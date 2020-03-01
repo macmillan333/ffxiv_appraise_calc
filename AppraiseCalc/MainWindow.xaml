@@ -10,8 +10,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="resultGrid" Margin="10,5,10,10" Grid.Row="1" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid x:Name="resultGrid" Margin="10,5" Grid.Row="1" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Chain" Binding="{Binding ChainDescription}"/>
                 <DataGridTextColumn Header="# Remaining gather attempts" Binding="{Binding NumGatherAttempts}"/>
@@ -39,6 +40,7 @@
             <TextBox x:Name="maxGpTextbox" Margin="5" TextWrapping="Wrap" Text="600" VerticalContentAlignment="Center" TextChanged="MaxGpTextbox_TextChanged" Grid.Row="1" Grid.Column="2"/>
             <TextBox x:Name="procChanceTextbox" Margin="5" TextWrapping="Wrap" Text="0.3" VerticalContentAlignment="Center" TextChanged="ProcChanceTextbox_TextChanged" Grid.Row="1" Grid.Column="3"/>
         </Grid>
+        <Label Content="SM = Single Mind (-1 attempt) | UC = Utmost Caution (-10 wear) | IN = Instinctual (0.8-1.5x) | IM = Impulsive (0.9x+proc) | ST = Stickler (0.5x, no wear, 1 use)" Margin="10,5,10,0" Grid.Row="2"/>
 
     </Grid>
 </Window>

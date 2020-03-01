@@ -86,7 +86,7 @@ namespace AppraiseCalc
 
                     if (a.singleMind) desc.Append("(SM)");
                     if (a.utmostCaution) desc.Append("(UC)");
-                    desc.Append(a.appraisalType.ToString());
+                    desc.Append(a.appraisalType.ToString().Substring(0, 2).ToUpper());
 
                     firstAction = false;
                 }
