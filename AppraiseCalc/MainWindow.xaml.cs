@@ -167,6 +167,17 @@ namespace AppraiseCalc
                 return cost;
             }
         }
+        public bool ContainsStickler
+        {
+            get
+            {
+                foreach (Action a in actions)
+                {
+                    if (a.appraisalType == AppraisalType.Stickler) return true;
+                }
+                return false;
+            }
+        }
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -199,19 +210,57 @@ namespace AppraiseCalc
             int maxActions = Math.Min(maxActionsLimitedByWear, maxActionsLimitedByAttempt);
 
             // Start building chains.
-            System.Action<Chain> extendChain = null;  // In-line definition doesn't allow recursion for some reason
-            extendChain = (Chain c) => 
+            System.Action<Chain> verifyAndAddChain = (Chain c) =>
             {
+                // Conditions for a valid chain:
+                // - At least 1 action
+                // - At least 1 remaining gathering attempt
+                // - Do not exceed max wear
+                // - Do not exceed GP
+                // - Do not use Stickler more than once (this is satified while searching)
                 if (c.actions.Count > 0
                     && c.NumGatherAttempts >= 1
-                    && c.TotalWear <= Settings.Get().maxWear)
+                    && c.TotalWear <= Settings.Get().maxWear
+                    && c.GpCost <= Settings.Get().maxGp)
                 {
                     results.Add(c.Clone());
                 }
+            };
+            System.Action<Chain> extendChain = null;  // In-line definition doesn't allow recursion for some reason
+            extendChain = (Chain c) => 
+            {
+                // Apply buffs to current chain and test all buffed chains.
+                int maxBuffsForThisChain = Math.Min(maxBuffs, c.actions.Count);
+                for (int numSm = 0; numSm <= maxBuffsForThisChain; numSm++)
+                {
+                    for (int i = 0; i < numSm; i++)
+                    {
+                        c.actions[i].singleMind = true;
+                    }
+                    for (int numUc = 0; numUc + numSm <= maxBuffsForThisChain; numUc++)
+                    {
+                        for (int i = 0; i < numUc; i++)
+                        {
+                            c.actions[i].utmostCaution = true;
+                        }
+                        verifyAndAddChain(c);
+                        for (int i = 0; i < numUc; i++)
+                        {
+                            c.actions[i].utmostCaution = false;
+                        }
+                    }
+                    for (int i = 0; i < numSm; i++)
+                    {
+                        c.actions[i].singleMind = false;
+                    }
+                }
 
                 if (c.actions.Count >= maxActions) return;
+                bool containsStickler = c.ContainsStickler;
                 foreach (AppraisalType type in Enum.GetValues(typeof(AppraisalType)))
                 {
+                    if (containsStickler && type == AppraisalType.Stickler) continue;
+
                     Action a = new Action();
                     a.appraisalType = type;
                     c.actions.Add(a);
